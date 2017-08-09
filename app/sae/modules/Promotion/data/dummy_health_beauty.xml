@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<designs>
+    <surgery>
+        <content>
+            <title>Lorem ipsum</title>
+            <description>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</description>
+            <conditions>Lorem ipsum dolor sit amet</conditions>
+            <is_unique>1</is_unique>
+            <end_at>2023-02-28</end_at>
+        </content>
+    </surgery>
+    <beauty_center>
+        <content>
+            <title>20% off</title>
+            <description>Ut nullo egeat amicitiis meis iudicet et et benevolentiam illius.</description>
+            <conditions>Lorem Ipsum</conditions>
+            <is_unique>1</is_unique>
+            <end_at>2022-08-31</end_at>
+        </content>
+    </beauty_center>
+</designs>
+

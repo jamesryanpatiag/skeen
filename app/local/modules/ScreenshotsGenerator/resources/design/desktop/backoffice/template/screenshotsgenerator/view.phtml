@@ -1,0 +1,54 @@
+<sb-section title="'<?php echo addslashes(__("List of your applications")); ?>'" button="button">
+    <br />
+    <div class="form-group">
+        <label for="filter"><?php echo __("Search"); ?></label>
+        <input type="text" id="filter" class="form-control" ng-model="urlParams.filter" placeholder="<?php echo __("Search"); ?>" />
+    </div>
+
+    <div class="clear"></div>
+    <br />
+    <table class="table">
+        <col width="5%" />
+        <col width="5%" />
+        <col width="23%" />
+        <col width="30%" />
+        <col width="30%" />
+        <col width="7%" />
+        <thead>
+        <tr>
+            <th></th>
+            <th class="pointer" ng-class="{'pointer-up': urlParams.order == 'app_id' && urlParams.by, 'pointer-down': urlParams.order == 'app_id' && !urlParams.by}" ng-click="urlParams.order = 'app_id'; urlParams.by = !urlParams.by"><?php echo __("Id"); ?></th>
+            <th class="pointer" ng-class="{'pointer-up': urlParams.order == 'name' && urlParams.by, 'pointer-down': urlParams.order == 'name' && !urlParams.by}" ng-click="urlParams.order = 'name'; urlParams.by = !urlParams.by"><?php echo __("Name"); ?></th>
+            <th class="pointer" ng-class="{'pointer-up': urlParams.order == 'bundle_id' && urlParams.by, 'pointer-down': urlParams.order == 'bundle_id' && !urlParams.by}" ng-click="urlParams.order = 'bundle_id'; urlParams.by = !urlParams.by"><?php echo __("Bundle Id"); ?></th>
+            <th class="pointer" ng-class="{'pointer-up': urlParams.order == 'package_name' && urlParams.by, 'pointer-down': urlParams.order == 'package_name' && !urlParams.by}" ng-click="urlParams.order = 'package_name'; urlParams.by = !urlParams.by"><?php echo __("Package Name"); ?></th>
+            <th><?php echo __("Actions"); ?></th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr ng-show="applications.length" ng-repeat="application in applications">
+                <td><img ng-src="{{ application.icon }}" width="30" /></td>
+                <td>{{ application.id }}</td>
+                <td>{{ application.name }}</td>
+                <td>{{ application.bundle_id }}</td>
+                <td>{{ application.package_name }}</td>
+                <td>
+                    <a ng-click="download(application.id,application.url_key,application.app_store_icon,application.google_play_icon,'<?php echo $_SERVER['HTTP_HOST'];?>')" title="<?php echo __("Download"); ?>"><i class="fa fa-download"></i></a>
+                </td>
+            </tr>
+            <tr ng-show="!applications.length">
+                <td colspan="6" class="a-center"><?php echo __("You don't have any applications yet"); ?></td>
+            </tr>
+        </tbody>
+    </table>
+    <br />
+    <bgf-pagination
+        collection="applications"
+        page="page"
+        per-page="perPage"
+        link-group-size="2"
+        client-limit="clientLimit"
+        template-url="<?php echo $this->getUrl("/backoffice/paginate/template") ?>"
+        url="'<?php echo $this->getUrl("/screenshotsgenerator/backoffice_list/findall") ?>'"
+        url-params="urlParams">
+    </bgf-pagination>
+</sb-section>

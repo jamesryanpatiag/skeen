@@ -1,0 +1,21 @@
+<ion-view class="inbox-view" view-title="{{ 'Leave a reply' | translate }}">
+
+    <ion-content sb-background-image class="inbox-content">
+        <div>
+            <form name="inboxForm" ng-submit="postComment()" novalidate>
+                <div class="list" ng-class="{ 'card': settings.display_card }">
+                    <label class="item item-input item-custom">
+                        <textarea placeholder="{{ 'Your comment' | translate }}" rows="10" ng-model="reply.message" required></textarea>
+                    </label>
+
+                </div>
+
+                <div class="list" ng-class="{ 'padding': settings.display_card }">
+                    <button class="button button-block button-custom">{{ "Send" | translate }}</button>
+                </div>
+
+            </form>
+        </div>
+    </ion-content>
+
+</ion-view>

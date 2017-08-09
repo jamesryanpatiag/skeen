@@ -1,0 +1,42 @@
+<?php $application = $this->getApplication(); ?>
+<div class="has_header" sb-background-image value-id="value_id" ng-class="{background_image: style_background_image}" ng-style="style_background_image" >
+
+    <sb-header title-back="'<?php echo $this->_("Back") ?>'" title="page_title" message="message"></sb-header>
+
+    <div class="clear"></div>
+
+    <sb-loader is-loading="is_loading" size="'48'" block="'background'"></sb-loader>
+
+<!--    <div class="scrollable_content comments" sb-load-more factory="factory" collection="collection">-->
+    <div class="scrollable_content comments" sb-load-more factory="factory" collection="collection" load-more="loadMore(offset)">
+
+        <div class="list background">
+            <ul>
+                <li ng-repeat="item in collection" class="comment" >
+                    <div class="details padding">
+                        <h3 class="title">{{ item.send_at }}</h3>
+                        <div ng-if="item.firstname"><?php echo $this->_("By"); ?> {{ item.firstname }} {{ item.lastname }}</div>
+                        <div ng-if="!item.firstname"><?php echo $this->_("By")." ".$application->getName(); ?></div>
+                        <div class="subtitle a-justify" ng-bind-html="item.message | trusted_html"></div>
+                        <div class="clear"></div>
+                    </div>
+                </li>
+                <li class="empty" ng-if="!collection.length">
+                    <p class="a-center"><?php echo $this->_("Nothing to display"); ?></p>
+                </li>
+            </ul>
+            <div class="post slide-top background" ng-show="show_post">
+                <textarea ng-model="reply.message" placeholder="<?php echo $this->_("Type your comment here..."); ?>"></textarea>
+                <div>
+                    <button class="button bt_ok" ng-click="postComment()"><?php echo $this->_("OK"); ?></button>
+                    <button class="button bt_cancel" ng-click="showPost()"><?php echo $this->_("Cancel"); ?></button>
+                </div>
+            </div>
+        </div>
+        <div class="bottom_bar_comment background reverse" ng-show="show_bottom_bar">
+            <div class="bt" ng-click="showPost()">
+                <img ng-src="{{ pencil_icon_url }}" alt="" title="" width="20" />
+            </div>
+        </div>
+    </div>
+</div>

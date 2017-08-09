@@ -1,0 +1,41 @@
+<?php $message = $this->getCurrentMessage(); ?>
+<?php $comments = new Inbox_Model_Application_Reply(); ?>
+<?php $comments = $comments->findAll($message->getMessageId(), null, false); ?>
+<div id="inbox_edit_comment" class="section inbox_step">
+    <form id="commentForm" method="post">
+        <div class="buttons">
+            <button type="button" onclick="inbox.closeComment();" class="delete left"><i class="icon-arrow-left"></i></button>
+            <div class="clear"></div>
+        </div>
+        <div id="comments_list">
+            <table id="table_comments_list">
+                <col width="40%" />
+                <col width="20%" />
+                <col width="20%" />
+                <col width="10%" />
+                <thead>
+                <tr>
+                    <th><?php echo $this->_("Title"); ?></th>
+                    <th><?php echo $this->_("Customer"); ?></th>
+                    <th><?php echo $this->_("Date"); ?></th>
+                    <th><?php echo $this->_("Actions"); ?></th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php foreach($comments as $comment) : ?>
+                    <tr id="comment_row_<?php echo $comment->getId(); ?>">
+                        <td><?php echo mb_strlen($comment->getMessage())>75?mb_substr($comment->getMessage(),0,75)."...":$comment->getMessage(); ?></td>
+                        <td><?php echo $comment->getFirstname()?$comment->getFirstname()." ".$comment->getLastName():$this->_("Admin"); ?></td>
+                        <td><?php echo $comment->getCreatedAt(); ?></td>
+                        <td><i class="icon-reply bt" rel="<?php echo $comment->getId(); ?>" onclick="inbox.replyComment(<?php echo $comment->getId(); ?>)"></i> <i class="icon-trash bt" onclick="comment.deleteComment(<?php echo $comment->getId(); ?>)"></i></td>
+                    </tr>
+                <?php endforeach ?>
+                </tbody>
+            </table>
+            <div class="clear"></div>
+        </div>
+    </form>
+    <form id="form_delete_comment">
+        <input type="hidden" id="delete_comment_id" name="delete_comment_id" />
+    </form>
+</div>

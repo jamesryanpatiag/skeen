@@ -1,0 +1,17 @@
+{
+  "name": "Inbox",
+  "description": "Send private messages with specific content to users, individually.",
+  "version": "4.11.3",
+  "type": "module",
+  "description": "<a href=\"https://updates02.siberiancms.com/release-notes/modules/inbox-4.11.3.html\" target=\"_blank\">Send private messages with specific content to users, individually: click here to see the release notes</a>",
+  "release_note": {
+    "url": "https://updates02.siberiancms.com/release-notes/modules/inbox-4.11.3.html",
+    "show": true
+  },
+  "dependencies": {
+    "system": {
+      "type": "SAE",
+      "version": "4.11.3"
+    }
+  }
+}

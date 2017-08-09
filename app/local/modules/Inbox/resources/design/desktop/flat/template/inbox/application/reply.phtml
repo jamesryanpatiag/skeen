@@ -1,0 +1,77 @@
+<?php
+    $message = $this->getMessage();
+    $replies = $this->getReplies();
+
+    $reply_form = $this->getReplyForm();
+?>
+
+<div class="reply_form">
+    <table class="table content-white-bkg">
+        <thead>
+            <tr class="border-blue">
+                <th style="width: 35%;"><?php echo __("From"); ?></th>
+                <th style="width: 50%;"><?php echo __("Message"); ?></th>
+                <th style="width: 15%;"><?php echo __("Date") ?></th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach($replies as $reply): ?>
+            <?php
+            if(!is_null($reply->getCustomerId()) && is_null($reply->getAdminId())) {
+                $from = sprintf("%s %s (%s)", $reply->getCustomerFirstname(), $reply->getCustomerLastname(), $reply->getCustomerEmail());
+                $color = "odd";
+            } else {
+                if($reply->getAdminFirstname() != "") {
+                    $from = sprintf("%s", __("<b>Admin</b> (%s %s - %s)", $reply->getAdminFirstname(), $reply->getAdminLastname(), $reply->getAdminEmail()));
+                } else {
+                    $from = sprintf("%s", __("<b>Admin</b> (%s)", $reply->getAdminEmail()));
+                }
+
+                $color = "even";
+            }
+            ?>
+            <tr class="<?php echo $color; ?>">
+                <td><?php echo $from; ?></td>
+                <td><?php echo cut(strip_tags($reply->getMessage()), 500); ?></td>
+                <td><?php echo datetime_to_format($reply->getCreatedAt()); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+        <?php if(sizeof($replies) <= 0): ?>
+        <tfoot>
+            <tr>
+                <td colspan="3"><?php echo __("No replies.") ?></td>
+            </tr>
+        </tfoot>
+        <?php endif; ?>
+    </table>
+
+    <?php echo $reply_form; ?>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+
+});
+</script>
+
+<style type="text/css">
+    .reply_form table td {
+        line-height: 14px !important;
+        font-size: 14px !important;
+        vertical-align: middle !important;
+        padding: 6px !important;
+    }
+
+    .reply_form table tr.odd td {
+        background-color: #f3f3f3;
+    }
+
+    .reply_form table tr.even td {
+        background-color: #fafafa;
+    }
+
+    .reply_form .cke_button__cmsimage {
+        display: none !important;
+    }
+</style>

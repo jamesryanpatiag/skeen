@@ -1,0 +1,11 @@
+<div class="inbox_bottom_bar background reverse">
+    <div class="warning left" ng-if="!message.is_visible_in_editor">
+        <?php echo $this->_("Closed by Admin"); ?>
+    </div>
+    <div class="bt" ng-click="confirmDeleteMessage()">
+        <img class="trash" ng-src="{{ trash_icon_url }}" alt="" title="" width="17" />
+    </div>
+    <div class="bt" ng-click="viewComments()">
+        <img class="reply" ng-src="{{ comment_icon_url }}" alt="" title="" width="17" />
+    </div>
+</div>

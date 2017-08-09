@@ -1,0 +1,76 @@
+<ion-view class="inbox-view" view-title="{{ 'Inbox replies' | translate }}">
+
+    <ion-nav-buttons side="secondary">
+        <div sb-tooltip collection="tooltip.collection" current-item="tooltip.current_item" button-label="tooltip.button_label" on-item-clicked="setShowRecent(object)" ng-if="tooltip"></div>
+        <button ng-click="right_button.action()" class="button button-clear header-item" ng-if="right_button">
+            <span class="back-text"><span class="default-title">{{ right_button.label }}</span></span>
+            <i class="icon" ng-class="right_button.icon"></i>
+        </button>
+    </ion-nav-buttons>
+
+    <ion-content sb-background-image class="has-tabs inbox-content">
+
+        <ion-refresher
+                class="spinner-custom"
+                pulling-text="{{ 'Pull to refresh...' | translate }}"
+                on-refresh="pullToRefresh()">
+        </ion-refresher>
+
+        <div class="loader" ng-show="is_loading">
+            <ion-spinner class="spinner-custom"></ion-spinner>
+        </div>
+
+        <div class="inbox-replies list" ng-class="{ 'card': settings.display_card, 'compact': settings.display_compact, 'compact card': settings.display_compact_card }">
+
+            <div ng-repeat="item in collection track by $index" class="item item-custom item-text-wrap">
+
+                <div ng-if="settings.display_compact || settings.display_compact_card">
+
+                    <span ng-if="item.from_app == '0'"><strong>{{ "me" | translate }}</strong></span>
+
+                    <span ng-if="(item.from_app == '1') && ((settings.answer_from == 'appname' || settings.answer_from == '') || (!item.admin_firstname && (settings.answer_from == 'admin')))"><strong>{{ app_name }}</strong></span>
+
+                    <span ng-if="(item.from_app == '1') && item.admin_firstname && (settings.answer_from == 'admin')"><strong>{{ item.admin_firstname }} {{ item.admin_lastname }}</strong></span>
+
+                    <span class="pull-right" style="font-size: 14px;">{{ item.send_at }}</span>
+
+                </div>
+
+                <div ng-if="!settings.display_compact && !settings.display_compact_card">
+
+                    <h3><i class="icon ion-ios-calendar"></i> <span>{{ item.send_at }}</span></h3>
+
+                    <p ng-if="item.from_app == '0'"><i class="icon ion-person"></i> {{ "By" | translate }} <strong>{{ "me" | translate }}</strong></p>
+
+                    <p ng-if="(item.from_app == '1') && ((settings.answer_from == 'appname' || settings.answer_from == '') || (!item.admin_firstname && (settings.answer_from == 'admin')))"><i class="icon ion-ios-filing"></i> {{ "By" | translate }} <strong>{{ app_name }}</strong></p>
+
+                    <p ng-if="(item.from_app == '1') && item.admin_firstname && (settings.answer_from == 'admin')"><i class="icon ion-person"></i> {{ "By" | translate }} <strong>{{ item.admin_firstname }} {{ item.admin_lastname }}</strong></p>
+
+                </div>
+
+                <br/>
+
+                <p class="text-justify" ng-bind-html="item.message | trusted_html" sb-a-click></p>
+            </div>
+            <div class="item item-custom" ng-if="!collection.length">
+                <p class="text-center">{{ "Nothing to display." | translate }}</p>
+            </div>
+
+        </div>
+
+    </ion-content>
+
+    <div class="tabs tabs-icon-top inbox-footer" ng-show="show_bottom_bar">
+        <div class="tab-item" ng-click="gotToPost()">
+            <i class="icon ion-edit"></i> {{ "Leave a reply" | translate }}
+        </div>
+    </div>
+
+    <style type="text/css">
+        .inbox-view .inbox-replies.compact .item-custom {
+            padding: 8px;
+        }
+    </style>
+
+</ion-view>
+

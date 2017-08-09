@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<designs>
+    <surgery>
+        <content>
+            <form>
+                <email>test@ipsum.co</email>
+            </form>
+            <form_sections>
+                <section>
+                    <name>Lorem Ipsum</name>
+                    <fields>
+                        <field>
+                            <name>Ipsum</name>
+                            <type>email</type>
+                        </field>
+                        <field>
+                            <name>Ipsum</name>
+                            <type>nombre</type>
+                        </field>
+                        <field>
+                            <name>Lorem</name>
+                            <type>textarea</type>
+                        </field>
+                    </fields>
+                </section>
+                <section>
+                    <name>Lorem Ipsum</name>
+                    <fields>
+                        <field>
+                            <name>Ipsum</name>
+                            <type>geoloc</type>
+                        </field>
+                        <field>
+                            <name>Ipsum</name>
+                            <type>radio</type>
+                            <option>Option 1;Option 2;Option 3;Option 4</option>
+                        </field>
+                        <field>
+                            <name>Ipsum</name>
+                            <type>checkbox</type>
+                            <option>Option 1;Option 2;Option 3</option>
+                        </field>
+                        <field>
+                            <name>Lorem</name>
+                            <type>select</type>
+                            <option>Option 1;Option 2;Option 3</option>
+                        </field>
+                    </fields>
+                </section>
+            </form_sections>
+        </content>
+    </surgery>
+    <beauty_center>
+        <content>
+            <form>
+                <email>beautycenter@beautycenter.com</email>
+            </form>
+            <form_sections>
+                <section>
+                    <name>Satisfaction</name>
+                    <fields>
+                        <field>
+                            <name>In Ennius Haec quas reperiuntur?</name>
+                            <type>radio</type>
+                            <option>Lorem;Ipsum</option>
+                        </field>
+                        <field>
+                            <name>Praesens quibus ferebatur Augustum non?</name>
+                            <type>checkbox</type>
+                            <option>Option 1;Option 2;Option 3;Option 4</option>
+                        </field>
+                    </fields>
+                </section>
+                <section>
+                    <name>Info</name>
+                    <fields>
+                        <field>
+                            <name>Name</name>
+                            <type>texte</type>
+                        </field>
+                        <field>
+                            <name>Phone Number</name>
+                            <type>nombre</type>
+                        </field>
+                        <field>
+                            <name>Email</name>
+                            <type>email</type>
+                        </field>
+                    </fields>
+                </section>
+                <section>
+                    <name>Anything to suggest?</name>
+                    <fields>
+                        <field>
+                            <name>Lorem Ipsum</name>
+                            <type>textarea</type>
+                        </field>
+                    </fields>
+                </section>
+            </form_sections>
+        </content>
+    </beauty_center>
+</designs>
+

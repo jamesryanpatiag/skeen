@@ -1,0 +1,9 @@
+<div class="subheader" ng-show="message.title">
+    <div class="inbox_subheader">
+        <h3>{{ message.title }}</h3>
+        <div class="inbox_date">
+            <img src="<?php echo $this->getColorizedImage($this->getImage('pictos/edit.png', true), $this->getApplication()->getBlock('subheader')->getColor()); ?>" alt="" title="" width="15" />
+            {{ message.send_at }}
+        </div>
+    </div>
+</div>

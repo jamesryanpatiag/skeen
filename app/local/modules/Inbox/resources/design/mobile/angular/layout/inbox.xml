@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout>
+
+    <inbox_mobile_list_template_l1>
+        <views>
+            <content class="core_view_mobile_default" template="inbox/l1/list.phtml" />
+            <list class="core_view_mobile_default" template="html/l7/list.phtml" />
+        </views>
+    </inbox_mobile_list_template_l1>
+
+    <inbox_mobile_view_template_l1>
+        <views>
+            <content class="core_view_mobile_default" template="cms/page/l1/view.phtml" />
+            <subheader class="core_view_mobile_default" template="inbox/l1/view/subheader.phtml" />
+            <bottom_bar class="core_view_mobile_default" template="inbox/l1/view/bottom_bar.phtml" />
+        </views>
+    </inbox_mobile_view_template_l1>
+
+    <inbox_mobile_comment_view_template_l1>
+        <views>
+            <content class="core_view_mobile_default" template="inbox/l1/comment/view.phtml" />
+        </views>
+    </inbox_mobile_comment_view_template_l1>
+
+</layout>

@@ -1,0 +1,468 @@
+<?php $application = $this->getApplication(); ?>
+<?php $option = $this->getOptionValue(); ?>
+<?php $customers = array(); ?>
+<?php $customer = new Customer_Model_Customer(); ?>
+<?php $customers = $customer->findAll(array("app_id" => $application->getId())); ?>
+<?php $messages = new Inbox_Model_Application_Message(); ?>
+<?php $messages = $messages->findAll(array("value_id" => $option->getValueId(), "is_visible_in_editor" => 1)); ?>
+<div class="edit_page inbox">
+    <div id="list">
+        <div class="section">
+            <h4 class="subtitle">
+                <span class="left area"><?php echo $this->_('Add'); ?></span>
+                <hr />
+                <span class="area right">
+                    <button type="button" onclick="feature.edit();" class="default_button add right" id="add_item">
+                        <i class="icon-plus"></i>
+                    </button>
+                </span>
+                <div class="clear"></div>
+            </h4>
+            <?php echo $this->createPartialHtml('no_item', 'core_view_default', 'application/customization/features/edit/no_item.phtml'); ?>
+        </div>
+
+            <div class="section">
+                <h4 class="subtitle">
+                    <span class="left area"><?php echo $this->_('Manage'); ?></span>
+                    <hr />
+                <span class="area right">
+                    <button type="button" class="default_button" id="toggle_existing_items">
+                        <i class="icon-chevron-down"></i>
+                    </button>
+                </span>
+                    <div class="clear"></div>
+                </h4>
+                <div id="existing_items">
+                    <table id="table_messages_list" width="100%">
+                        <col width="50%" />
+                        <col width="30%" />
+                        <col width="20%" />
+                        <thead>
+                            <tr>
+                                <th><?php echo $this->_("Title"); ?></th>
+                                <th><?php echo $this->_("Date"); ?></th>
+                                <th class="text-center"><?php echo $this->_("Actions"); ?></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <?php foreach($messages as $message) : ?>
+                            <?php $nb_comments = $message->getNumberOfComments(); ?>
+                            <tr id="message_row_<?php echo $message->getId(); ?>">
+                                <td>
+                                    <?php echo $message->getTitle(); ?>
+                                    <?php echo $message->getIsVisibleInMobile()?"":"<span class='warning'>(".$this->_("Deleted by user.").")</span>"; ?>
+                                </td>
+                                <td><?php echo $message->getSendAt(); ?></td>
+                                <td class="text-center"><i class="icon-comment <?php if($nb_comments>0) echo "edit_comment pointer"; ?>" rel="<?php echo $message->getId(); ?>"> (<?php if($nb_comments > 10) echo "10+"; else echo $nb_comments; ?>)</i> <i class="icon-trash delete_message pointer" rel="<?php echo $message->getId(); ?>"></i></td>
+                            </tr>
+                        <?php endforeach ?>
+                        </tbody>
+                    </table>
+                    <div class="clear"></div>
+                </div>
+            </div>
+
+        <div class="section">
+            <?php
+            echo $this->getLayout()
+                ->addPartial('background_image', 'Core_View_Default', 'application/customization/features/edit/background_image.phtml')
+                ->setValueId($option->getId())
+                ->toHtml()
+            ;
+            ?>
+        </div>
+
+    </div>
+
+    <div id="edit" style="display: none;">
+        <form id="inboxForm" method="post">
+            <div id="inbox_step_one" class="section inbox_step" pos="1"></div>
+            <div id="inbox_step_two" class="section inbox_step" pos="2" style="display: none">
+                <div class="buttons">
+                    <button type="button" onclick="inbox.goToStep('one');" class="delete left"><i class="icon-arrow-left"></i></button>
+                    <button type="button" onclick="inbox.goToStep('three');" class="default_button right"><i class="icon-arrow-right"></i></button>
+                    <div class="clear"></div>
+                </div>
+                <div id="customers_list">
+                    <table id="table_customers_list" width="615px">
+                        <col width="35px" />
+                        <col width="35%" />
+                        <col width="35%" />
+                        <col width="27%" />
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th><?php echo $this->_('Email'); ?></th>
+                            <th><?php echo $this->_('User'); ?></th>
+                            <th><?php echo $this->_('Created at'); ?></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php foreach($customers as $customer) : ?>
+                            <tr>
+                                <td>
+                                    <label for="<?php echo $customer->getId(); ?>" class="checkbox" >
+                                        <input type="checkbox" class="checkbox chk_customers" id="<?php echo $customer->getId(); ?>" value="<?php echo $customer->getId(); ?>" />
+                                    </label>
+                                </td>
+                                <td><?php echo $customer->getEmail(); ?></td>
+                                <td><?php echo $customer->getFirstname()." ".$customer->getLastname(); ?></td>
+                                <td><?php echo $customer->getCreatedAt(); ?></td>
+                            </tr>
+                        <?php endforeach ?>
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <td></td>
+                            <td><?php echo $this->_('Email'); ?></td>
+                            <td><?php echo $this->_('User'); ?></td>
+                            <td><?php echo $this->_('Created at'); ?></td>
+                        </tr>
+                        </tfoot>
+                    </table>
+                    <div class="clear"></div>
+                </div>
+            </div>
+            <div id="inbox_step_three" class="section inbox_step container-fluid" pos="3" style="display: none">
+                <div class="buttons">
+                    <button type="button" onclick="inbox.goToStep('two');" class="delete left"><i class="icon-arrow-left"></i></button>
+                    <button type="submit" class="default_button right"><?php echo $this->_("OK"); ?></button>
+                    <div class="clear"></div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-6">
+                        <label for="send_at">
+                            <?php echo $this->_("Send my message at this date (leave empty for instant sending):"); ?>
+                            <input type="text" id="send_at" class="push_datetimepicker required form-control" name="send_at" value="" />
+                        </label>
+                    </div>
+                </div>
+                <?php if(Push_Model_Message::hasTargetedNotificationsModule()): ?>
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <label for="send_notif" class="checkbox">
+                            <input type="checkbox" class="checkbox" id="send_notif" name="send_notif" value="1"/>
+                            <?php echo $this->_("Send a push notification to warn user"); ?>
+                        </label>
+                    </div>
+                </div>
+                <?php endif; ?>
+            </div>
+            <input type="hidden" id="customers_receiver" name="customers_receiver" />
+            <input type="hidden" id="admin_id" name="admin_id" value="<?php echo $application->getAdminId(); ?>"/>
+            <input type="hidden" id="sendtoAllCustomer" name="sendToAllCustomer" value="0"/> 
+        </form>
+    </div>
+
+    <div id="container_comment_edit">
+        <form id="edit_comment_form">
+            <input type="hidden" id="message_id" name="message_id" />
+        </form>
+        <div id="comment_edit">
+        </div>
+    </div>
+
+    <div id="container_comment_reply">
+        <form id="reply_comment_form">
+            <input type="hidden" id="reply_id" name="reply_id" />
+        </form>
+        <div id="comment_reply">
+        </div>
+    </div>
+
+    <form id="form_delete_message">
+        <input type="hidden" id="delete_message_id" name="delete_message_id" />
+    </form>
+
+    <script type="text/javascript">
+        var id_string = "";
+        var message = new AlertMessage();
+
+        page.setCallback('didappear', function() {
+
+            inbox.init();
+
+            $('#toggle_existing_items').click(function() {
+                $('#existing_items').stop().slideToggle(300, function() {
+                    if($(this).is(':visible')) $('#toggle_existing_items').children('i').removeClass('icon-chevron-down').addClass('icon-chevron-up');
+                    else $('#toggle_existing_items').children('i').removeClass('icon-chevron-up').addClass('icon-chevron-down');
+                });
+            });
+
+            $('#add_item').click(function() {
+                reload(this, "<?php echo $this->getUrl("inbox/application/form", array("option_value_id" => $option->getId())); ?>", true, function(data) {
+                    $('#inbox_step_one').append(data.form);
+                    feature.edit();
+                    cms_didappear();
+                });
+            });
+
+            $('.edit_comment').click(function() {
+                inbox.editComment($(this).attr("rel"));
+            });
+
+            $('.delete_message').click(function() {
+                inbox.deleteMessage($(this).attr("rel"));
+            });
+
+            $('#table_customers_list_filter').append('<div class="dataTables_filter"><?php echo $this->_('Send to all');?><label for="sendToAll" class="checkbox" style="display:inline;margin-left:10px;"><span class="icon"></span><span class="icon-to-fade"></span><input id="sendToAll" class="checkbox" type="checkbox" /> </label></div>');
+            $('#sendToAll').change(function () {
+                if($(this).is(":checked")) {
+                   $(this).parent('label').addClass('checked'); 
+                   $('#sendtoAllCustomer').attr("value", 1);
+                   for(var i = 1; i<=<?php echo ++$customer_count ;?>; i++){
+                       $("#"+i).attr("checked", true);
+                       $("#"+i).parent("label").addClass("checked");
+                   }
+
+                   $($('.chk_customers:not(:checked)')).click();
+                } else {
+                   $(this).parent("label").removeClass('checked');  
+                   $("#sendtoAllCustomer").attr("value", 0);
+                   for(var i =1 ; i<=<?php echo ++$customer_count ;?>; i++){
+                       $("#"+i).attr("checked", false);
+                       $("#"+i).parent("label").removeClass("checked");
+                   }
+                   $($('.chk_customers:checked')).click();
+
+                }
+                return false ; 
+            });
+            $(".paginate_button").click(function(){
+                if($('#sendtoAllCustomer').attr("value") == 1) {
+                    $(".chk_customers").each(function(index,elem) {
+                        if(!$(elem).hasClass("checked")) $(elem).click(); 
+                    });
+                } else {
+                    $(".chk_customers").each(function(index,elem) {
+                        if($(elem).hasClass("checked")) $(elem).click(); 
+                    });
+
+
+                }
+                return false;
+            });
+
+        });
+
+        page.setCallback('willdisappear', function() {
+            $('#toggle_existing_items').unbind('click');
+            $('#add_item').unbind("click");
+            $('.edit_comment').unbind("click");
+            $('.delete_message').unbind("click");
+            $('#table_messages_list').dataTable().fnDestroy();
+            $('#table_customers_list').dataTable().fnDestroy();
+            $('#inboxForm').unbind("submit");
+        });
+
+        if($.datepicker.regional['<?php echo Core_Model_Language::getCurrentLanguageDatepicker(); ?>']) {
+            $.datepicker.setDefaults($.datepicker.regional['<?php echo Core_Model_Language::getCurrentLanguageDatepicker(); ?>']);
+        } else {
+            $.datepicker.setDefaults($.datepicker.regional['en']);
+        }
+
+        var inbox = {
+            init: function() {
+                createCustomUI();
+
+                $('#table_messages_list').dataTable({
+                    asStripeClasses: ['odd editor_menu active', 'even'],
+                    bFilter: true,
+                    sPaginationType: "full_numbers",
+                    bLengthChange: false
+                });
+
+                $('#table_customers_list').dataTable({
+                    asStripeClasses: ['odd editor_menu active', 'even'],
+                    bFilter: true,
+                    sPaginationType: "full_numbers",
+                    bLengthChange: false
+                });
+
+                $('.push_datetimepicker').datetimepicker({
+                    dateFormat: 'yy-mm-dd'
+                });
+
+                $('#inboxForm').submit(function(e) {
+
+                    $(".chk_customers").each(function(index,elem) {
+                        if($(elem).is(':checked')) {
+                            id_string += ";" + $(elem).val();
+                        }
+                    });
+
+                    if(id_string == "") {
+                        message.isError(true);
+                        message.setMessage("<?php echo $this->_("Please select at least one user."); ?>");
+                        message.setTimer(2);
+                        message.show();
+                        this.goToStep("two");
+                        return false;
+                    }
+
+                    $("#customers_receiver").val(id_string);
+
+                    if(!$('#cms_block_container').valid()) return;
+                    reload($('#customPageForm'), '<?php echo $this->getUrl('cms/application_page/editpost/', array("value_id" => $option->getId())) ?>', true, function(data) {
+                        if(data.success) {
+                            $("#page_id").val(data.page_id);
+                            reload($('#inboxForm'), '<?php echo $this->getUrl('inbox/application/editpost') ?>', true, function(data) {
+                                if(data.success) {
+                                    page.reload();
+                                }
+                            });
+                        }
+                    });
+
+                    return false;
+                }.bind(this));
+
+            },
+            goToStep: function(step) {
+
+                if(step=="two" && !$("#title").val()) {
+                    message.isError(true);
+                    message.setMessage("<?php echo $this->_("Please fill at least a title."); ?>");
+                    message.setTimer(2);
+                    message.show();
+                    return false;
+                }
+
+                var newDiv = $('#inbox_step_'+step);
+                var appearCallback = function() {$('#page').removeAttr('style'); newDiv.removeAttr('style');}
+                animation.slide($('.inbox_step:visible'), newDiv, function() {}, function() {});
+                $('#page').animate({height: $('#icon_and_name').outerHeight(true) + newDiv.outerHeight(true)}, 500, null, appearCallback);
+
+            },
+            editComment: function(message_id) {
+                $("#message_id").val(message_id);
+                reload($("#edit_comment_form"), '<?php echo $this->getUrl('inbox/application/editcomment'); ?>', true, function(datas) {
+                    if(datas.form_html) {
+                        $('#comment_edit').html(datas.form_html);
+                        feature.slide($('#list'), $('#container_comment_edit'), 'right');
+                        comment.init();
+                    }
+                });
+            },
+            deleteMessage: function(message_id) {
+                if(confirm("<?php echo $this->_("Are you sure to delete this message?"); ?>")) {
+                    $("#delete_message_id").val(message_id);
+                    reload($("#form_delete_message"), '<?php echo $this->getUrl('inbox/application/deletemessage'); ?>', true, function (datas) {
+                        $("#message_row_" + message_id).remove();
+                    });
+                }
+            },
+            replyComment: function(message_id) {
+                $("#reply_id").val(message_id);
+                reload($("#reply_comment_form"), '<?php echo $this->getUrl('inbox/application/replycomment'); ?>', true, function(datas) {
+                    if(datas.form_html) {
+                        $('#comment_reply').html(datas.form_html);
+                        feature.slide($('#container_comment_edit'), $('#container_comment_reply'), 'right');
+                        reply.init();
+                    }
+                });
+            },
+            closeComment: function() {
+                $('#comment_edit').html('');
+                feature.slide($('#container_comment_edit'), $('#list'));
+                comment.destroy();
+            },
+            closeCommentReply: function(message_id) {
+                $('#comment_reply').html('');
+                feature.slide($('#container_comment_reply'), $('#container_comment_edit'));
+                inbox.editComment(message_id);
+            }
+        };
+
+        var comment = {
+            init: function() {
+                $('#table_comments_list').dataTable({
+                    asStripeClasses: ['odd editor_menu active', 'even'],
+                    bFilter: false,
+                    sPaginationType: "full_numbers",
+                    bLengthChange: false
+                });
+            },
+            deleteComment: function(message_id) {
+                if(confirm("<?php echo $this->_("Are you sure to delete this comment?"); ?>")) {
+                    $("#delete_comment_id").val(message_id);
+                    reload($("#form_delete_comment"), '<?php echo $this->getUrl('inbox/application/deletecomment'); ?>', true, function (datas) {
+                        $("#comment_row_" + message_id).remove();
+                    });
+                }
+            },
+            destroy: function() {
+                $('#table_comments_list').dataTable().destroy();
+            }
+        };
+
+        var reply = {
+            init: function() {
+                $('.replace-with-ckeditor').ckeditor();
+            },
+            postReply: function(message_id) {
+                $("#parent_id").val(message_id);
+                reload($("#commentreplyForm"), '<?php echo $this->getUrl('inbox/application/postreply'); ?>', true, function(data) {
+                    inbox.closeCommentReply(message_id);
+                });
+            }
+        };
+
+    </script>
+    <style>
+        #list .pointer{cursor:pointer}
+
+        .inbox table.dataTable {
+            margin: 20px 0 10px;
+        }
+        .inbox table.dataTable th {
+            text-align: left;
+        }
+        .inbox table.dataTable th, table.dataTable td {
+            padding: 10px;
+            height:25px;
+        }
+        .inbox table.dataTable thead tr {
+            border-bottom: 3px solid;
+        }
+        .inbox table.dataTable tfoot tr {
+            border-top: 3px solid;
+        }
+        .inbox .dataTables_filter {
+            margin-top:20px;
+        }
+        .inbox .dataTables_filter input[type="search"] {
+            margin-left:15px;
+            color: #000000;
+        }
+        .inbox .dataTables_filter input[type="checkbox"] {
+            margin-left:15px;
+            color: #000000;
+        }
+        .inbox .dataTables_info {
+            float: left;
+            padding: 10px;
+        }
+        .inbox .dataTables_paginate {
+            display: block;
+            float: right;
+        }
+        .inbox .dataTables_paginate a {
+            display: block;
+            float: left;
+            padding: 10px;
+        }
+        .inbox .dataTables_paginate a.paginate_button_disabled {
+            opacity: 0.3
+        }
+        .inbox input[type="checkbox"]{
+            width:20px;
+        }
+        .inbox table.dataTable div.disabled {
+            background-color:rgba(255,255,255,0.3) ;
+            width: 100%;
+            height: 100%;
+            z-index:999;
+        }
+    </style>
+</div>

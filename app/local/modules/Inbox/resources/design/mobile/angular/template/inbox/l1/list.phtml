@@ -1,0 +1,22 @@
+<?php $application = $this->getApplication(); ?>
+<div class="has_header" sb-background-image value-id="value_id" ng-class="{background_image: style_background_image}" ng-style="style_background_image">
+
+    <sb-header title-back="'<?php echo $this->_("Back") ?>'" title="page_title" message="message"></sb-header>
+
+    <div class="clear"></div>
+
+    <sb-loader is-loading="is_loading" size="'48'" block="'background'"></sb-loader>
+
+    <div sb-load-more factory="factory" collection="collection" load-more="loadMore(offset)">
+        <?php echo $this->getPartialHtml("list"); ?>
+    </div>
+
+    <div ng-show="!customer_id" class="inbox-connexion-required background">
+        <p class="a-justify">
+            <?php echo $this->_("You have to be connected to use the Inbox. Please connect to your account by clicking on the button below."); ?>
+        </p>
+        <p class="a-center">
+            <button class="button" ng-click="gotToLogin()"><?php echo $this->_("Connect me!"); ?></button>
+        </p>
+    </div>
+</div>

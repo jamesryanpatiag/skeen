@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<designs>
+    <surgery>
+        <content></content>
+    </surgery>
+    <beauty_center>
+        <content>
+            <store_name>San Francisco</store_name>
+            <email>beautycenter@beautycenter.beautycenter</email>
+        </content>
+        <content>
+            <store_name>New York</store_name>
+            <email>beautycenter@beautycenter.beautycenter</email>
+        </content>
+        <content>
+            <store_name>Paris</store_name>
+            <email>beautycenter@beautycenter.beautycenter</email>
+        </content>
+    </beauty_center>
+</designs>

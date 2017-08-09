@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<designs>
+    <surgery>
+        <images>
+            <!--<image type="picasa">-->
+            <!--<content>-->
+            <!--<type_id>picasa</type_id>-->
+            <!--<name>Siberian</name>-->
+            <!--<type>search</type>-->
+            <!--<param>siberiancms</param>-->
+            <!--</content>-->
+            <!--</image>-->
+            <image type="custom">
+                <content>
+                    <type_id>custom</type_id>
+                    <name>Gallery 1</name>
+                </content>
+                <custom>
+                    <url>/../../images/templates/surgery/content/doc4.png</url>
+                    <description></description>
+                </custom>
+                <custom>
+                    <url>/../../images/templates/surgery/content/doc5.png</url>
+                    <description></description>
+                </custom>
+                <custom>
+                    <url>/../../images/templates/surgery/content/doc6.png</url>
+                    <description></description>
+                </custom>
+            </image>
+            <image type="custom">
+                <content>
+                    <type_id>custom</type_id>
+                    <name>Gallery 2</name>
+                </content>
+                <custom>
+                    <url>/../../images/templates/surgery/content/doc4.png</url>
+                    <description></description>
+                </custom>
+                <custom>
+                    <url>/../../images/templates/surgery/content/doc6.png</url>
+                    <description></description>
+                </custom>
+                <custom>
+                    <url>/../../images/templates/surgery/content/doc5.png</url>
+                    <description></description>
+                </custom>
+                <custom>
+                    <url>/../../images/templates/surgery/content/doc7.png</url>
+                    <description></description>
+                </custom>
+            </image>
+        </images>
+    </surgery>
+    <beauty_center>
+        <images>
+            <image type="custom">
+                <content>
+                    <type_id>custom</type_id>
+                    <name>Gallery 1</name>
+                </content>
+                <custom>
+                    <url>/../../images/templates/beauty_center/content/beauty_center7.jpeg</url>
+                    <title>Ipsum</title>
+                    <description>Lorem</description>
+                </custom>
+                <custom>
+                    <url>/../../images/templates/beauty_center/content/beauty_center8.jpeg</url>
+                    <title>Lorem</title>
+                    <description>Ipsum</description>
+                </custom>
+                <custom>
+                    <url>/../../images/templates/beauty_center/content/beauty_center9.jpeg</url>
+                    <title>Fructo</title>
+                    <description>Fructus</description>
+                </custom>
+            </image>
+            <image type="custom">
+                <content>
+                    <type_id>custom</type_id>
+                    <name>Gallery 2</name>
+                </content>
+                <custom>
+                    <url>/../../images/templates/beauty_center/content/beauty_center9.jpeg</url>
+                    <description></description>
+                </custom>
+                <custom>
+                    <url>/../../images/templates/beauty_center/content/beauty_center8.jpeg</url>
+                    <description></description>
+                </custom>
+                <custom>
+                    <url>/../../images/templates/beauty_center/content/beauty_center7.jpeg</url>
+                    <description></description>
+                </custom>
+            </image>
+        </images>
+    </beauty_center>
+</designs>
